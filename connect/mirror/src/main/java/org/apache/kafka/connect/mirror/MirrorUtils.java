@@ -21,7 +21,7 @@ import org.apache.kafka.clients.admin.CreateTopicsOptions;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.errors.ClusterAuthorizationException;
+import org.apache.kafka.common.errors.AuthorizationException;
 import org.apache.kafka.common.errors.InvalidConfigurationException;
 import org.apache.kafka.common.errors.TimeoutException;
 import org.apache.kafka.common.errors.TopicAuthorizationException;
@@ -290,13 +290,13 @@ public final class MirrorUtils {
                         topicName);
                 return;
             }
-            if (cause instanceof TopicAuthorizationException) {
+            if (cause instanceof AuthorizationException) {
                 log.debug("Not authorized to create topic(s) '{}' upon the brokers." +
                                 " Falling back to assume topic(s) exist or will be auto-created by the broker.",
                         topicName);
                 return;
             }
-            if (cause instanceof ClusterAuthorizationException) {
+            if (cause instanceof AuthorizationException) {
                 log.debug("Not authorized to create topic '{}'." +
                                 " Falling back to assume topic exists or will be auto-created by the broker.",
                         topicName);
